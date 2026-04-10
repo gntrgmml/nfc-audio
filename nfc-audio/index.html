@@ -7,11 +7,13 @@
 </head>
 <body>
   <h1>NFC Audio Player</h1>
-  <p>Tap play to hear the audio.</p>
+  <audio id="player" controls preload="auto"></audio>
 
-  <audio id="player" controls preload="auto">
-    <source src="audio/test.mp3" type="audio/mpeg">
-    Your browser does not support audio playback.
-  </audio>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get("file") || "default.m4a";
+    const player = document.getElementById("player");
+    player.src = "audio/" + file;
+  </script>
 </body>
 </html>
