@@ -4,64 +4,33 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NFC Audio Player</title>
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-    }
-
-    .container {
-      text-align: center;
-      padding: 24px;
-    }
-
-    h1 {
-      margin-bottom: 16px;
-    }
-
-    #playBtn {
-      font-size: 2rem;
-      font-weight: bold;
-      padding: 32px 48px;
-      min-width: 280px;
-      min-height: 140px;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-    }
-
-    audio {
-      margin-top: 24px;
-      width: min(90vw, 420px);
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>NFC Audio Player</h1>
-    <button id="playBtn">▶ PLAY AUDIO</button>
-    <audio id="player" controls preload="auto">
-      <source src="audio/test.mp3" type="audio/mpeg">
-      Your browser does not support audio playback.
-    </audio>
-  </div>
+  <h1>NFC Audio Player</h1>
+
+  <audio id="player" preload="auto">
+    <source src="audio/test.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="playBtn" hidden>Play audio</button>
 
   <script>
     const audio = document.getElementById("player");
-    const playBtn = document.getElementById("playBtn");
+    const btn = document.getElementById("playBtn");
 
-    playBtn.addEventListener("click", async () => {
+    async function tryAutoplay() {
       try {
         await audio.play();
       } catch (e) {
-        console.error("Playback failed:", e);
+        btn.hidden = false;
       }
+    }
+
+    tryAutoplay();
+
+    btn.addEventListener("click", async () => {
+      await audio.play();
+      btn.hidden = true;
     });
   </script>
 </body>
